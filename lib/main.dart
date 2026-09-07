@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_first_app/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,15 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(title: const Text('My App')),
-        body: const Center(
-          child: Text(
-            'Hello World!',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
+      title: "Flutter Demo",
+      home: const HomeScreen(),
     );
   }
 }
