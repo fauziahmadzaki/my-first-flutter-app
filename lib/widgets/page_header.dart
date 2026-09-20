@@ -16,7 +16,7 @@ class PageHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Produk Terbaru",
+          title,
           style: TextStyle(
             fontSize: 24,
             color: Colors.black,
@@ -24,7 +24,7 @@ class PageHeader extends StatelessWidget {
           ),
         ),
         Text(
-          "Temukan produk terbaru kami di sini.",
+          subTitle,
           style: TextStyle(fontSize: 16, color: Colors.grey[600]),
         ),
       ],
