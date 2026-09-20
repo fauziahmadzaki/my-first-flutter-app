@@ -12,6 +12,8 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   bool _isOrdered = false;
+  bool _isFavorite = false;
+  int _quantity = 1;
 
   String formatPrice(double price) {
     return "Rp ${price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}";
@@ -30,6 +32,19 @@ class _DetailScreenState extends State<DetailScreen> {
           service.name,
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              _isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: _isFavorite ? Colors.red : null,
+            ),
+            onPressed: () {
+              setState(() {
+                _isFavorite = !_isFavorite;
+              });
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -64,7 +79,75 @@ class _DetailScreenState extends State<DetailScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Jumlah",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        spacing: 12,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if (_quantity > 1) _quantity--;
+                              });
+                            },
+                            icon: const Icon(Icons.remove_circle_outline),
+                            iconSize: 28,
+                          ),
+                          Text(
+                            "$_quantity",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _quantity++;
+                              });
+                            },
+                            icon: const Icon(Icons.add_circle_outline),
+                            iconSize: 28,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Total",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          formatPrice(service.price * _quantity),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   StatsSection(
                     rating: service.rating,
                     views: service.viewCount,
@@ -145,7 +228,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            "Pesanan Dikonfirmasi",
+                            "Pesanan Dikonfirmasi — $_quantity item",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
